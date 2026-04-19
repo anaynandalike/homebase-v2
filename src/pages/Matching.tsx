@@ -16,7 +16,6 @@ import {
   UserPlus,
   Users,
   ArrowRight,
-  Filter,
 } from "lucide-react";
 
 const icebreakerPrompts = [
@@ -61,31 +60,31 @@ export default function Matching() {
 
   return (
     <PageTransition>
-      <div className="max-w-5xl mx-auto px-5 py-6">
+      <div className="max-w-[430px] mx-auto px-4 py-5">
         {/* Header */}
-        <div className="mb-6">
-          <h1 className="font-heading text-2xl font-bold text-charcoal">
+        <div className="mb-4">
+          <h1 className="font-heading text-xl font-bold text-charcoal">
             Community
           </h1>
-          <p className="text-warmgray text-sm mt-0.5">
+          <p className="text-warmgray text-[11px] mt-0.5">
             Find your people, build your circle
           </p>
         </div>
 
         {/* Search */}
-        <div className="relative mb-5">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-warmgray-light" />
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-warmgray-light" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by name or state..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-full border border-sand bg-white text-sm focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40 transition-all"
+            className="w-full pl-9 pr-3 py-2 rounded-full border border-sand bg-white text-xs focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40"
           />
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex items-center gap-1.5 mb-5">
           {[
             { id: "all" as const, label: "All" },
             { id: "mentors" as const, label: "Mentors" },
@@ -94,23 +93,23 @@ export default function Matching() {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+              className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all ${
                 tab === t.id
                   ? "bg-red text-white"
-                  : "bg-white border border-sand text-warmgray hover:text-charcoal"
+                  : "bg-white border border-sand text-warmgray"
               }`}
             >
               {t.label}
             </button>
           ))}
-          <label className="flex items-center gap-1.5 ml-auto px-3 py-1.5 text-xs text-warmgray cursor-pointer">
+          <label className="flex items-center gap-1 ml-auto text-[10px] text-warmgray cursor-pointer">
             <input
               type="checkbox"
               checked={homeStateOnly}
               onChange={(e) => setHomeStateOnly(e.target.checked)}
-              className="accent-red w-3.5 h-3.5"
+              className="accent-red w-3 h-3"
             />
-            <MapPin className="w-3 h-3 text-red" />
+            <MapPin className="w-2.5 h-2.5 text-red" />
             My State
           </label>
         </div>
@@ -118,55 +117,47 @@ export default function Matching() {
         {/* Student Grid */}
         {filtered.length === 0 ? (
           <EmptyState
-            icon={<Users className="w-8 h-8" />}
+            icon={<Users className="w-7 h-7" />}
             title="No matches found"
-            description="Try adjusting your filters to find more students."
+            description="Try adjusting your filters."
           />
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 mb-10">
+          <div className="grid grid-cols-3 gap-x-4 gap-y-5 mb-8">
             {(tab === "all" ? regularStudents : filtered).map((student, i) => {
               const shared = sharedInterests(student);
               const isConnected = connectedStudents.includes(student.id);
               return (
                 <motion.div
                   key={student.id}
-                  initial={{ opacity: 0, y: 15 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.04 }}
+                  transition={{ delay: i * 0.03 }}
                   className="flex flex-col items-center text-center group"
                 >
-                  {/* Avatar */}
-                  <div className="relative mb-3">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-sand to-cream-dark flex items-center justify-center text-charcoal font-bold text-lg ring-2 ring-white shadow-md group-hover:ring-red/30 transition-all">
+                  <div className="relative mb-1.5">
+                    <div className="w-[68px] h-[68px] rounded-full bg-gradient-to-br from-sand to-cream-dark flex items-center justify-center text-charcoal font-bold text-sm ring-2 ring-white shadow-md group-hover:ring-red/30 transition-all">
                       {student.avatar}
                     </div>
                     {student.isMentor && (
-                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-red rounded-full flex items-center justify-center ring-2 ring-white">
-                        <Award className="w-3 h-3 text-white" />
-                      </div>
-                    )}
-                    {student.travelDates && tab === "travel" && (
-                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-charcoal rounded-full flex items-center justify-center ring-2 ring-white">
-                        <Car className="w-3 h-3 text-white" />
+                      <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 bg-red rounded-full flex items-center justify-center ring-2 ring-white">
+                        <Award className="w-2.5 h-2.5 text-white" />
                       </div>
                     )}
                   </div>
 
-                  {/* Name & Info */}
-                  <p className="font-semibold text-sm text-charcoal mb-0.5">
+                  <p className="font-semibold text-[11px] text-charcoal leading-tight">
                     {student.name}
                   </p>
-                  <p className="text-[11px] text-warmgray mb-2">
-                    {student.homeState} · {student.year}
+                  <p className="text-[9px] text-warmgray mb-1.5">
+                    {student.homeState}
                   </p>
 
-                  {/* Shared interests */}
                   {shared.length > 0 && (
-                    <div className="flex flex-wrap justify-center gap-1 mb-2">
+                    <div className="flex flex-wrap justify-center gap-0.5 mb-1.5">
                       {shared.slice(0, 2).map((interest) => (
                         <span
                           key={interest}
-                          className="text-[10px] bg-red/8 text-red px-1.5 py-0.5 rounded-full"
+                          className="text-[8px] bg-red/8 text-red px-1.5 py-0.5 rounded-full"
                         >
                           {interest}
                         </span>
@@ -175,29 +166,24 @@ export default function Matching() {
                   )}
 
                   {tab === "travel" && student.travelDates && (
-                    <p className="text-[10px] text-warmgray mb-2">
-                      {student.travelDates.departure} → {student.travelDates.destination}
+                    <p className="text-[8px] text-warmgray mb-1.5 leading-tight">
+                      {student.travelDates.departure}
                     </p>
                   )}
 
-                  {/* Actions */}
-                  <div className="flex gap-1.5 mt-auto">
+                  <div className="flex gap-1">
                     <button
                       onClick={() => setIcebreakerModal(student)}
-                      className="w-8 h-8 rounded-full bg-red/10 flex items-center justify-center text-red hover:bg-red/20 transition-colors"
-                      title="Send Icebreaker"
+                      className="w-6 h-6 rounded-full bg-red/10 flex items-center justify-center text-red hover:bg-red/20 transition-colors"
                     >
-                      <Send className="w-3.5 h-3.5" />
+                      <Send className="w-2.5 h-2.5" />
                     </button>
                     {tab === "travel" && student.travelDates ? (
                       <button
-                        onClick={() =>
-                          addToast("Rideshare request sent!")
-                        }
-                        className="w-8 h-8 rounded-full bg-charcoal flex items-center justify-center text-white hover:bg-charcoal/80 transition-colors"
-                        title="Join Rideshare"
+                        onClick={() => addToast("Rideshare request sent!")}
+                        className="w-6 h-6 rounded-full bg-charcoal flex items-center justify-center text-white"
                       >
-                        <Car className="w-3.5 h-3.5" />
+                        <Car className="w-2.5 h-2.5" />
                       </button>
                     ) : (
                       <button
@@ -208,14 +194,13 @@ export default function Matching() {
                           }
                         }}
                         disabled={isConnected}
-                        className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors ${
+                        className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors ${
                           isConnected
                             ? "bg-sage/20 text-forest"
                             : "bg-charcoal text-white hover:bg-charcoal/80"
                         }`}
-                        title={isConnected ? "Connected" : "Connect"}
                       >
-                        <UserPlus className="w-3.5 h-3.5" />
+                        <UserPlus className="w-2.5 h-2.5" />
                       </button>
                     )}
                   </div>
@@ -225,47 +210,46 @@ export default function Matching() {
           </div>
         )}
 
-        {/* Kinship Mentors Section (only on "all" tab) */}
+        {/* Kinship Mentors */}
         {tab === "all" && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.2 }}
           >
-            <h2 className="font-heading text-lg font-semibold text-charcoal mb-4">
+            <h2 className="font-heading text-sm font-semibold text-charcoal mb-3">
               Kinship Mentors
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {mentors.map((mentor) => {
                 const isConnected = connectedStudents.includes(mentor.id);
                 return (
                   <div
                     key={mentor.id}
-                    className="bg-white rounded-2xl border border-sand/60 p-4 flex items-center gap-4"
+                    className="bg-white rounded-2xl border border-sand/60 p-3.5 flex items-center gap-3"
                   >
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-red/15 to-sand flex items-center justify-center text-charcoal font-bold text-sm shrink-0 ring-2 ring-white shadow-sm">
+                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-red/15 to-sand flex items-center justify-center text-charcoal font-bold text-xs shrink-0 ring-2 ring-white shadow-sm">
                       {mentor.avatar}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <p className="font-semibold text-sm text-charcoal">
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <p className="font-semibold text-xs text-charcoal">
                           {mentor.name}
                         </p>
-                        <span className="text-[10px] bg-red/10 text-red px-2 py-0.5 rounded-full font-medium">
+                        <span className="text-[8px] bg-red/10 text-red px-1.5 py-0.5 rounded-full font-semibold">
                           Mentor
                         </span>
                       </div>
-                      <p className="text-xs text-warmgray">
-                        {mentor.year} · {mentor.homeState} ·{" "}
-                        {mentor.interests.slice(0, 3).join(", ")}
+                      <p className="text-[10px] text-warmgray">
+                        {mentor.year} · {mentor.homeState}
                       </p>
                     </div>
-                    <div className="flex gap-2 shrink-0">
+                    <div className="flex gap-1.5 shrink-0">
                       <button
                         onClick={() => setIcebreakerModal(mentor)}
-                        className="w-9 h-9 rounded-full bg-red/10 flex items-center justify-center text-red hover:bg-red/20 transition-colors"
+                        className="w-7 h-7 rounded-full bg-red/10 flex items-center justify-center text-red"
                       >
-                        <Send className="w-4 h-4" />
+                        <Send className="w-3 h-3" />
                       </button>
                       <button
                         onClick={() => {
@@ -275,13 +259,13 @@ export default function Matching() {
                           }
                         }}
                         disabled={isConnected}
-                        className={`w-9 h-9 rounded-full flex items-center justify-center transition-colors ${
+                        className={`w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
                           isConnected
                             ? "bg-sage/20 text-forest"
                             : "bg-red text-white hover:bg-red-dark"
                         }`}
                       >
-                        <UserPlus className="w-4 h-4" />
+                        <UserPlus className="w-3 h-3" />
                       </button>
                     </div>
                   </div>
@@ -299,42 +283,39 @@ export default function Matching() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center p-4"
             onClick={() => setIcebreakerModal(null)}
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 40, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl"
+              className="bg-white rounded-2xl p-5 max-w-[400px] w-full shadow-xl"
             >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-heading text-lg font-semibold text-charcoal">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-heading text-base font-semibold text-charcoal">
                   Send an Icebreaker
                 </h3>
                 <button
                   onClick={() => setIcebreakerModal(null)}
                   className="text-warmgray hover:text-charcoal"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
-              <p className="text-warmgray text-sm mb-4">
-                Choose a prompt for{" "}
-                <strong>{icebreakerModal.name}</strong>:
+              <p className="text-warmgray text-xs mb-3">
+                Choose a prompt for <strong>{icebreakerModal.name}</strong>:
               </p>
               <div className="space-y-2">
                 {icebreakerPrompts.map((prompt) => (
                   <button
                     key={prompt}
                     onClick={() => {
-                      addToast(
-                        `Icebreaker sent to ${icebreakerModal.name}!`
-                      );
+                      addToast(`Icebreaker sent to ${icebreakerModal.name}!`);
                       setIcebreakerModal(null);
                     }}
-                    className="w-full text-left p-3.5 rounded-xl border border-sand hover:border-red/40 hover:bg-red/5 text-sm text-charcoal transition-colors"
+                    className="w-full text-left p-3 rounded-xl border border-sand hover:border-red/40 hover:bg-red/5 text-xs text-charcoal transition-colors"
                   >
                     "{prompt}"
                   </button>

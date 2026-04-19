@@ -66,42 +66,41 @@ export default function HomeLink() {
 
   const moodSummary =
     Number(recentAvg) >= 4
-      ? "doing well — mood has been positive this week"
+      ? "doing well this week"
       : Number(recentAvg) >= 3
-      ? "hanging in there — some ups and downs this week"
-      : "going through a tough stretch — extra support may help";
+      ? "hanging in there"
+      : "going through a tough stretch";
 
   return (
     <PageTransition>
-      <div className="max-w-2xl mx-auto px-5 py-6">
-        <div className="flex items-center justify-between mb-6">
+      <div className="max-w-[430px] mx-auto px-4 py-5">
+        <div className="flex items-center justify-between mb-5">
           <div>
-            <h1 className="font-heading text-2xl font-bold text-charcoal">
+            <h1 className="font-heading text-xl font-bold text-charcoal">
               Care Package
             </h1>
-            <p className="text-warmgray text-sm mt-0.5">
+            <p className="text-warmgray text-[11px] mt-0.5">
               Stay connected with home
             </p>
           </div>
 
-          {/* View Toggle */}
           <div className="flex bg-white border border-sand/60 rounded-full p-0.5">
             <button
               onClick={() => setView("student")}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium transition-all ${
                 view === "student" ? "bg-red text-white" : "text-warmgray"
               }`}
             >
-              <Smile className="w-3 h-3" />
+              <Smile className="w-2.5 h-2.5" />
               Student
             </button>
             <button
               onClick={() => setView("family")}
-              className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium transition-all ${
                 view === "family" ? "bg-charcoal text-white" : "text-warmgray"
               }`}
             >
-              <Users className="w-3 h-3" />
+              <Users className="w-2.5 h-2.5" />
               Family
             </button>
           </div>
@@ -109,15 +108,15 @@ export default function HomeLink() {
 
         {view === "student" ? (
           <>
-            {/* Compose Update */}
+            {/* Compose */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl p-5 border border-sand/60 mb-5"
+              className="bg-white rounded-2xl p-4 border border-sand/60 mb-4"
             >
-              <div className="flex items-center gap-2 mb-3">
-                <Send className="w-4 h-4 text-red" />
-                <h2 className="font-heading text-base font-semibold text-charcoal">
+              <div className="flex items-center gap-1.5 mb-2.5">
+                <Send className="w-3.5 h-3.5 text-red" />
+                <h2 className="font-heading text-sm font-semibold text-charcoal">
                   Send a Mood Update
                 </h2>
               </div>
@@ -127,110 +126,108 @@ export default function HomeLink() {
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Write a message to your family..."
                 rows={3}
-                className="w-full px-4 py-3 rounded-xl border border-sand bg-cream/20 text-sm resize-none mb-3 focus:outline-none focus:ring-2 focus:ring-red/20"
+                className="w-full px-3 py-2.5 rounded-xl border border-sand bg-cream/20 text-xs resize-none mb-2.5 focus:outline-none focus:ring-2 focus:ring-red/20"
               />
 
               <div className="flex items-center justify-between">
-                <label className="flex items-center gap-2 cursor-pointer">
+                <label className="flex items-center gap-1.5 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={shareMoodWithFamily}
                     onChange={(e) => setShareMoodWithFamily(e.target.checked)}
-                    className="accent-red w-3.5 h-3.5"
+                    className="accent-red w-3 h-3"
                   />
-                  <span className="text-xs text-warmgray flex items-center gap-1">
+                  <span className="text-[10px] text-warmgray flex items-center gap-0.5">
                     {shareMoodWithFamily ? (
-                      <Eye className="w-3 h-3" />
+                      <Eye className="w-2.5 h-2.5" />
                     ) : (
-                      <EyeOff className="w-3 h-3" />
+                      <EyeOff className="w-2.5 h-2.5" />
                     )}
                     Share mood graph
                   </span>
                 </label>
                 <button
                   onClick={() => {
-                    addToast("Update sent to family!");
+                    addToast("Update sent!");
                     setMessage("");
                   }}
                   disabled={!message.trim()}
-                  className="px-5 py-2 bg-red text-white rounded-full text-xs font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
+                  className="px-4 py-1.5 bg-red text-white rounded-full text-[10px] font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
                 >
                   Send
                 </button>
               </div>
             </motion.div>
 
-            {/* Digital Hug + Sponsor */}
+            {/* Actions */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 }}
-              className="grid grid-cols-2 gap-3 mb-5"
+              transition={{ delay: 0.04 }}
+              className="grid grid-cols-2 gap-2.5 mb-4"
             >
               <button
                 onClick={() => setHugModal(true)}
-                className="bg-red rounded-2xl p-4 text-white text-left hover:bg-red-dark transition-colors"
+                className="bg-red rounded-2xl p-3.5 text-white text-left hover:bg-red-dark transition-colors"
               >
-                <Heart className="w-5 h-5 mb-2" />
-                <p className="font-semibold text-sm">Send a Digital Hug</p>
-                <p className="text-white/60 text-[10px] mt-0.5">
-                  With stickers & a message
+                <Heart className="w-4 h-4 mb-1.5" />
+                <p className="font-semibold text-xs">Digital Hug</p>
+                <p className="text-white/50 text-[9px] mt-0.5">
+                  Stickers & message
                 </p>
               </button>
               <button
-                onClick={() =>
-                  addToast("Meal sponsorship sent! Your student will love it.")
-                }
-                className="bg-charcoal rounded-2xl p-4 text-white text-left hover:bg-charcoal/90 transition-colors"
+                onClick={() => addToast("Meal sponsorship sent!")}
+                className="bg-charcoal rounded-2xl p-3.5 text-white text-left hover:bg-charcoal/90 transition-colors"
               >
-                <UtensilsCrossed className="w-5 h-5 mb-2" />
-                <p className="font-semibold text-sm">Sponsor a Meal</p>
-                <p className="text-white/40 text-[10px] mt-0.5">
-                  Treat them to campus dining
+                <UtensilsCrossed className="w-4 h-4 mb-1.5" />
+                <p className="font-semibold text-xs">Sponsor a Meal</p>
+                <p className="text-white/40 text-[9px] mt-0.5">
+                  Campus dining
                 </p>
               </button>
             </motion.div>
 
-            {/* Motivational Notes */}
+            {/* Notes */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="bg-white rounded-2xl p-5 border border-sand/60"
+              transition={{ delay: 0.08 }}
+              className="bg-white rounded-2xl p-4 border border-sand/60"
             >
-              <div className="flex items-center gap-2 mb-4">
-                <Mail className="w-4 h-4 text-red" />
-                <h2 className="font-heading text-base font-semibold text-charcoal">
+              <div className="flex items-center gap-1.5 mb-3">
+                <Mail className="w-3.5 h-3.5 text-red" />
+                <h2 className="font-heading text-sm font-semibold text-charcoal">
                   Notes from Home
                 </h2>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 {familyNotes.map((note) => (
                   <div
                     key={note.id}
-                    className={`p-4 rounded-xl border ${
+                    className={`p-3 rounded-xl border ${
                       note.read
-                        ? "border-sand/40 bg-cream/20"
+                        ? "border-sand/30 bg-cream/20"
                         : "border-red/15 bg-red-bg"
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-base">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm">
                           {stickerEmoji[note.sticker] || "\u2764\uFE0F"}
                         </span>
-                        <span className="font-medium text-sm text-charcoal">
+                        <span className="font-medium text-xs text-charcoal">
                           {note.from}
                         </span>
                         {!note.read && (
                           <span className="w-1.5 h-1.5 bg-red rounded-full" />
                         )}
                       </div>
-                      <span className="text-[10px] text-warmgray-light">
+                      <span className="text-[9px] text-warmgray-light">
                         {note.timestamp}
                       </span>
                     </div>
-                    <p className="text-xs text-warmgray leading-relaxed">
+                    <p className="text-[10px] text-warmgray leading-relaxed">
                       {note.message}
                     </p>
                   </div>
@@ -239,98 +236,94 @@ export default function HomeLink() {
             </motion.div>
           </>
         ) : (
-          /* Family View */
           <>
+            {/* Family View */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl p-5 border border-sand/60 mb-5"
+              className="bg-white rounded-2xl p-4 border border-sand/60 mb-4"
             >
-              <h2 className="font-heading text-base font-semibold text-charcoal mb-1">
+              <h2 className="font-heading text-sm font-semibold text-charcoal mb-0.5">
                 {user.name || "Your Student"}'s Well-Being
               </h2>
-              <p className="text-xs text-warmgray mb-4">
-                {user.name || "Your student"} is{" "}
-                <strong className="text-charcoal">{moodSummary}</strong>.
+              <p className="text-[10px] text-warmgray mb-3">
+                Currently <strong className="text-charcoal">{moodSummary}</strong>
               </p>
 
-              <div className="grid grid-cols-2 gap-3 mb-5">
-                <div className="bg-cream/60 rounded-xl p-3 text-center">
-                  <p className="text-xl font-bold text-red">{recentAvg}</p>
-                  <p className="text-[10px] text-warmgray">This Week Avg</p>
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                <div className="bg-cream/60 rounded-xl p-2.5 text-center">
+                  <p className="text-lg font-bold text-red">{recentAvg}</p>
+                  <p className="text-[9px] text-warmgray">This Week</p>
                 </div>
-                <div className="bg-cream/60 rounded-xl p-3 text-center">
-                  <p className="text-xl font-bold text-charcoal">
+                <div className="bg-cream/60 rounded-xl p-2.5 text-center">
+                  <p className="text-lg font-bold text-charcoal">
                     {(
                       moodHistory.reduce((a, b) => a + b.mood, 0) /
                       moodHistory.length
                     ).toFixed(1)}
                   </p>
-                  <p className="text-[10px] text-warmgray">30-Day Avg</p>
+                  <p className="text-[9px] text-warmgray">30-Day</p>
                 </div>
               </div>
 
               {shareMoodWithFamily ? (
-                <div className="h-44">
+                <div className="h-32">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={chartData}>
                       <XAxis
                         dataKey="date"
-                        tick={{ fontSize: 10, fill: "#B5B0AB" }}
-                        interval={5}
+                        tick={{ fontSize: 8, fill: "#B5B0AB" }}
+                        interval={6}
                         axisLine={false}
                         tickLine={false}
                       />
                       <YAxis
                         domain={[1, 5]}
                         ticks={[1, 2, 3, 4, 5]}
-                        tick={{ fontSize: 10, fill: "#B5B0AB" }}
+                        tick={{ fontSize: 8, fill: "#B5B0AB" }}
                         axisLine={false}
                         tickLine={false}
-                        width={24}
+                        width={18}
                       />
                       <Line
                         type="monotone"
                         dataKey="mood"
                         stroke="#C4404E"
-                        strokeWidth={2}
+                        strokeWidth={1.5}
                         dot={false}
                       />
                     </LineChart>
                   </ResponsiveContainer>
                 </div>
               ) : (
-                <div className="bg-cream/50 rounded-xl p-6 text-center">
-                  <EyeOff className="w-6 h-6 text-warmgray-light mx-auto mb-2" />
-                  <p className="text-xs text-warmgray">
-                    Mood sharing is turned off by your student.
+                <div className="bg-cream/50 rounded-xl p-5 text-center">
+                  <EyeOff className="w-5 h-5 text-warmgray-light mx-auto mb-1" />
+                  <p className="text-[10px] text-warmgray">
+                    Mood sharing is turned off.
                   </p>
                 </div>
               )}
             </motion.div>
 
-            {/* Family Actions */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 }}
-              className="grid grid-cols-2 gap-3"
+              transition={{ delay: 0.04 }}
+              className="grid grid-cols-2 gap-2.5"
             >
               <button
                 onClick={() => setHugModal(true)}
-                className="bg-red rounded-2xl p-4 text-white text-left hover:bg-red-dark transition-colors"
+                className="bg-red rounded-2xl p-3.5 text-white text-left hover:bg-red-dark transition-colors"
               >
-                <Heart className="w-5 h-5 mb-2" />
-                <p className="font-semibold text-sm">Send a Digital Hug</p>
+                <Heart className="w-4 h-4 mb-1.5" />
+                <p className="font-semibold text-xs">Send a Hug</p>
               </button>
               <button
-                onClick={() =>
-                  addToast("Meal sponsorship sent!")
-                }
-                className="bg-charcoal rounded-2xl p-4 text-white text-left hover:bg-charcoal/90 transition-colors"
+                onClick={() => addToast("Meal sponsorship sent!")}
+                className="bg-charcoal rounded-2xl p-3.5 text-white text-left hover:bg-charcoal/90 transition-colors"
               >
-                <Gift className="w-5 h-5 mb-2" />
-                <p className="font-semibold text-sm">Sponsor a Meal</p>
+                <Gift className="w-4 h-4 mb-1.5" />
+                <p className="font-semibold text-xs">Sponsor Meal</p>
               </button>
             </motion.div>
           </>
@@ -344,44 +337,42 @@ export default function HomeLink() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/40 flex items-end sm:items-center justify-center p-4"
             onClick={() => setHugModal(false)}
           >
             <motion.div
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 40, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white rounded-2xl p-6 max-w-md w-full shadow-xl"
+              className="bg-white rounded-2xl p-5 max-w-[400px] w-full shadow-xl"
             >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-heading text-lg font-semibold text-charcoal">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-heading text-base font-semibold text-charcoal">
                   Send a Digital Hug
                 </h3>
                 <button
                   onClick={() => setHugModal(false)}
                   className="text-warmgray hover:text-charcoal"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <p className="text-sm text-warmgray mb-3">Choose a sticker:</p>
-              <div className="flex gap-2 mb-4">
+              <p className="text-[11px] text-warmgray mb-2">Choose a sticker:</p>
+              <div className="flex gap-1.5 mb-3">
                 {stickerOptions.map((s) => (
                   <button
                     key={s.id}
                     onClick={() => setSelectedSticker(s.id)}
-                    className={`flex flex-col items-center p-2 rounded-xl transition-all ${
+                    className={`flex flex-col items-center p-1.5 rounded-lg transition-all ${
                       selectedSticker === s.id
                         ? "bg-red/10 scale-110"
-                        : "bg-cream hover:bg-cream-dark"
+                        : "bg-cream"
                     }`}
                   >
-                    <span className="text-xl">{s.emoji}</span>
-                    <span className="text-[9px] text-warmgray mt-0.5">
-                      {s.label}
-                    </span>
+                    <span className="text-lg">{s.emoji}</span>
+                    <span className="text-[7px] text-warmgray">{s.label}</span>
                   </button>
                 ))}
               </div>
@@ -391,7 +382,7 @@ export default function HomeLink() {
                 onChange={(e) => setHugMessage(e.target.value)}
                 placeholder="Add a message..."
                 rows={3}
-                className="w-full px-4 py-3 rounded-xl border border-sand bg-cream/20 text-sm resize-none mb-4 focus:outline-none focus:ring-2 focus:ring-red/20"
+                className="w-full px-3 py-2.5 rounded-xl border border-sand bg-cream/20 text-xs resize-none mb-3 focus:outline-none focus:ring-2 focus:ring-red/20"
               />
 
               <button
@@ -400,7 +391,7 @@ export default function HomeLink() {
                   setHugModal(false);
                   setHugMessage("");
                 }}
-                className="w-full py-2.5 bg-red text-white rounded-full text-sm font-semibold hover:bg-red-dark transition-colors"
+                className="w-full py-2 bg-red text-white rounded-full text-xs font-semibold hover:bg-red-dark transition-colors"
               >
                 Send Hug
               </button>

@@ -26,8 +26,12 @@ const categories = [
   "Clubs",
   "Events",
   "Dining",
-  "Essential Services",
+  "Essentials",
 ] as const;
+
+const categoryMap: Record<string, string> = {
+  Essentials: "Essential Services",
+};
 
 const categoryIcons: Record<string, React.ElementType> = {
   Counseling: Heart,
@@ -58,7 +62,8 @@ export default function Compass() {
       : resources;
 
   if (activeCategory !== "All" && activeTab === "browse") {
-    filtered = filtered.filter((r) => r.category === activeCategory);
+    const cat = categoryMap[activeCategory] || activeCategory;
+    filtered = filtered.filter((r) => r.category === cat);
   }
 
   if (searchQuery) {
@@ -66,8 +71,7 @@ export default function Compass() {
     filtered = filtered.filter(
       (r) =>
         r.title.toLowerCase().includes(q) ||
-        r.description.toLowerCase().includes(q) ||
-        r.category.toLowerCase().includes(q)
+        r.description.toLowerCase().includes(q)
     );
   }
 
@@ -76,30 +80,26 @@ export default function Compass() {
   const handleToggleBookmark = (resource: Resource) => {
     const wasBookmarked = isBookmarked(resource.id);
     toggleBookmark(resource.id);
-    addToast(
-      wasBookmarked
-        ? `Removed "${resource.title}" from bookmarks`
-        : `Bookmarked "${resource.title}"`
-    );
+    addToast(wasBookmarked ? "Removed bookmark" : "Bookmarked!");
   };
 
   return (
     <PageTransition>
-      <div className="max-w-5xl mx-auto px-5 py-6">
-        <div className="mb-6">
-          <h1 className="font-heading text-2xl font-bold text-charcoal">
+      <div className="max-w-[430px] mx-auto px-4 py-5">
+        <div className="mb-4">
+          <h1 className="font-heading text-xl font-bold text-charcoal">
             Campus Compass
           </h1>
-          <p className="text-warmgray text-sm mt-0.5">
+          <p className="text-warmgray text-[11px] mt-0.5">
             Resources, events, and essentials
           </p>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-5">
+        <div className="flex gap-1.5 mb-4">
           <button
             onClick={() => setActiveTab("browse")}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+            className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all ${
               activeTab === "browse"
                 ? "bg-red text-white"
                 : "bg-white border border-sand text-warmgray"
@@ -109,40 +109,40 @@ export default function Compass() {
           </button>
           <button
             onClick={() => setActiveTab("bookmarks")}
-            className={`flex items-center gap-1 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
+            className={`flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-medium transition-all ${
               activeTab === "bookmarks"
                 ? "bg-red text-white"
                 : "bg-white border border-sand text-warmgray"
             }`}
           >
-            <Bookmark className="w-3.5 h-3.5" />
+            <Bookmark className="w-3 h-3" />
             Saved ({bookmarkedIds.length})
           </button>
         </div>
 
         {/* Search */}
-        <div className="relative mb-5">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-warmgray-light" />
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-warmgray-light" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search resources and events..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-full border border-sand bg-white text-sm focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40"
+            placeholder="Search resources..."
+            className="w-full pl-9 pr-3 py-2 rounded-full border border-sand bg-white text-xs focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40"
           />
         </div>
 
         {/* Category filters */}
         {activeTab === "browse" && (
-          <div className="flex gap-2 mb-6 overflow-x-auto pb-1 scrollbar-hide">
+          <div className="flex gap-1.5 mb-4 overflow-x-auto pb-1 scrollbar-hide">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
+                className={`px-2.5 py-1 rounded-full text-[10px] font-medium whitespace-nowrap transition-all ${
                   activeCategory === cat
                     ? "bg-charcoal text-white"
-                    : "bg-white border border-sand text-warmgray hover:text-charcoal"
+                    : "bg-white border border-sand text-warmgray"
                 }`}
               >
                 {cat}
@@ -154,41 +154,37 @@ export default function Compass() {
         {/* Cards */}
         {filtered.length === 0 ? (
           <EmptyState
-            icon={<CompassIcon className="w-8 h-8" />}
-            title={
-              activeTab === "bookmarks"
-                ? "No bookmarks yet"
-                : "No results found"
-            }
+            icon={<CompassIcon className="w-7 h-7" />}
+            title={activeTab === "bookmarks" ? "No bookmarks yet" : "No results"}
             description={
               activeTab === "bookmarks"
                 ? "Bookmark resources for quick access."
-                : "Try a different search or category."
+                : "Try a different search."
             }
           />
         ) : (
-          <div className="space-y-3 mb-8">
+          <div className="space-y-2.5 mb-6">
             {filtered.map((resource, i) => {
               const Icon = categoryIcons[resource.category] || CompassIcon;
               return (
                 <motion.div
                   key={resource.id}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.03 }}
-                  className="bg-white rounded-2xl p-4 border border-sand/60 hover:shadow-sm transition-shadow"
+                  transition={{ delay: i * 0.025 }}
+                  className="bg-white rounded-2xl p-3.5 border border-sand/60"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 bg-cream rounded-xl flex items-center justify-center shrink-0">
-                      <Icon className="w-5 h-5 text-warmgray" />
+                  <div className="flex items-start gap-2.5">
+                    <div className="w-8 h-8 bg-cream rounded-lg flex items-center justify-center shrink-0">
+                      <Icon className="w-4 h-4 text-warmgray" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <div>
-                          <h3 className="font-semibold text-sm text-charcoal">
+                      <div className="flex items-start justify-between gap-1">
+                        <div className="min-w-0">
+                          <h3 className="font-semibold text-xs text-charcoal leading-tight">
                             {resource.title}
                           </h3>
-                          <span className="text-[10px] text-warmgray bg-cream px-2 py-0.5 rounded-full mt-1 inline-block">
+                          <span className="text-[8px] text-warmgray bg-cream px-1.5 py-0.5 rounded-full mt-1 inline-block">
                             {resource.category}
                           </span>
                         </div>
@@ -197,36 +193,36 @@ export default function Compass() {
                           className="text-warmgray-light hover:text-red transition-colors shrink-0"
                         >
                           {isBookmarked(resource.id) ? (
-                            <BookmarkCheck className="w-5 h-5 text-red" />
+                            <BookmarkCheck className="w-4 h-4 text-red" />
                           ) : (
-                            <Bookmark className="w-5 h-5" />
+                            <Bookmark className="w-4 h-4" />
                           )}
                         </button>
                       </div>
 
-                      <p className="text-xs text-warmgray mt-2">
+                      <p className="text-[10px] text-warmgray mt-1.5 leading-relaxed">
                         {resource.description}
                       </p>
 
-                      <div className="flex items-center gap-3 mt-2 text-[11px] text-warmgray-light">
-                        <span className="flex items-center gap-1">
-                          <MapPin className="w-3 h-3" />
+                      <div className="flex items-center gap-2 mt-1.5 text-[9px] text-warmgray-light">
+                        <span className="flex items-center gap-0.5">
+                          <MapPin className="w-2.5 h-2.5" />
                           {resource.location}
                         </span>
                         {resource.dateTime && (
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
+                          <span className="flex items-center gap-0.5">
+                            <Clock className="w-2.5 h-2.5" />
                             {resource.dateTime}
                           </span>
                         )}
                       </div>
 
                       {resource.vibeTags && resource.vibeTags.length > 0 && (
-                        <div className="flex gap-1.5 mt-2">
+                        <div className="flex gap-1 mt-1.5">
                           {resource.vibeTags.map((tag) => (
                             <span
                               key={tag}
-                              className="text-[10px] bg-red-bg text-red px-2 py-0.5 rounded-full"
+                              className="text-[8px] bg-red-bg text-red px-1.5 py-0.5 rounded-full"
                             >
                               {vibeEmojis[tag]} {tag}
                             </span>
@@ -241,30 +237,30 @@ export default function Compass() {
           </div>
         )}
 
-        {/* Out-of-State Essentials */}
+        {/* Essentials */}
         {activeTab === "browse" && activeCategory === "All" && (
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Package className="w-4 h-4 text-red" />
-              <h2 className="font-heading text-lg font-semibold text-charcoal">
+            <div className="flex items-center gap-1.5 mb-3">
+              <Package className="w-3.5 h-3.5 text-red" />
+              <h2 className="font-heading text-sm font-semibold text-charcoal">
                 Out-of-State Essentials
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {essentials.map((resource) => (
+            <div className="grid grid-cols-2 gap-2">
+              {essentials.map((r) => (
                 <div
-                  key={resource.id}
-                  className="bg-red-bg rounded-xl p-4 border border-red/8"
+                  key={r.id}
+                  className="bg-red-bg rounded-xl p-3 border border-red/8"
                 >
-                  <h4 className="font-medium text-sm text-charcoal mb-1">
-                    {resource.title}
+                  <h4 className="font-medium text-[11px] text-charcoal mb-0.5 leading-tight">
+                    {r.title}
                   </h4>
-                  <p className="text-[11px] text-warmgray mb-2">
-                    {resource.description}
+                  <p className="text-[9px] text-warmgray mb-1.5 leading-relaxed">
+                    {r.description}
                   </p>
-                  <span className="text-[10px] text-red flex items-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    {resource.location}
+                  <span className="text-[8px] text-red flex items-center gap-0.5">
+                    <MapPin className="w-2.5 h-2.5" />
+                    {r.location}
                   </span>
                 </div>
               ))}

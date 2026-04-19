@@ -12,26 +12,14 @@ import {
 } from "lucide-react";
 
 const interestOptions = [
-  "Hiking",
-  "Cooking",
-  "Gaming",
-  "Music",
-  "Photography",
-  "Reading",
-  "Dancing",
-  "Art",
-  "Yoga",
-  "Basketball",
-  "Volunteering",
-  "Writing",
-  "Coding",
-  "Surfing",
-  "Hockey",
+  "Hiking", "Cooking", "Gaming", "Music", "Photography", "Reading",
+  "Dancing", "Art", "Yoga", "Basketball", "Volunteering", "Writing",
+  "Coding", "Surfing", "Hockey",
 ];
 
 const lookingForOptions = [
   { id: "peer mentor", label: "Peer Mentor", desc: "An upperclassman who's been there" },
-  { id: "travel buddy", label: "Travel Buddy", desc: "Someone to share rides home with" },
+  { id: "travel buddy", label: "Travel Buddy", desc: "Someone to share rides home" },
   { id: "study partner", label: "Study Partner", desc: "Accountability and coffee runs" },
   { id: "friends", label: "Friends", desc: "Good people to hang out with" },
 ];
@@ -89,27 +77,25 @@ export default function Onboarding() {
   };
 
   const stepVariants = {
-    enter: { opacity: 0, x: 40 },
+    enter: { opacity: 0, x: 30 },
     center: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -40 },
+    exit: { opacity: 0, x: -30 },
   };
 
   return (
     <div className="min-h-screen bg-cream flex items-center justify-center p-4">
-      <div className="w-full max-w-lg">
-        {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-red rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-            <Home className="w-7 h-7 text-white" />
+      <div className="w-full max-w-[400px]">
+        <div className="text-center mb-6">
+          <div className="w-12 h-12 bg-red rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm">
+            <Home className="w-6 h-6 text-white" />
           </div>
-          <h1 className="font-heading text-3xl font-bold text-charcoal">
+          <h1 className="font-heading text-2xl font-bold text-charcoal">
             Welcome to HomeBase
           </h1>
-          <p className="text-warmgray mt-1.5 text-sm">Your home away from home</p>
+          <p className="text-warmgray mt-1 text-xs">Your home away from home</p>
         </div>
 
-        {/* Progress */}
-        <div className="flex gap-2 mb-8">
+        <div className="flex gap-1.5 mb-6">
           {[1, 2, 3, 4].map((s) => (
             <div
               key={s}
@@ -120,7 +106,7 @@ export default function Onboarding() {
           ))}
         </div>
 
-        <div className="bg-white rounded-3xl p-8 shadow-sm border border-sand/60">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-sand/60">
           <AnimatePresence mode="wait">
             {step === 1 && (
               <motion.div
@@ -129,18 +115,16 @@ export default function Onboarding() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.25 }}
               >
-                <h2 className="font-heading text-xl font-semibold mb-1">
+                <h2 className="font-heading text-lg font-semibold mb-0.5">
                   Tell us about yourself
                 </h2>
-                <p className="text-warmgray text-sm mb-6">
-                  Let's start with the basics
-                </p>
+                <p className="text-warmgray text-xs mb-5">The basics</p>
 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
-                    <label className="block text-sm font-medium text-charcoal mb-1.5">
+                    <label className="block text-[11px] font-medium text-charcoal mb-1">
                       Your Name
                     </label>
                     <input
@@ -148,11 +132,11 @@ export default function Onboarding() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g., Alex Johnson"
-                      className="w-full px-4 py-3 rounded-xl border border-sand bg-cream/30 focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40 transition-all"
+                      className="w-full px-3 py-2.5 rounded-xl border border-sand bg-cream/30 text-xs focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-charcoal mb-1.5">
+                    <label className="block text-[11px] font-medium text-charcoal mb-1">
                       University
                     </label>
                     <input
@@ -160,17 +144,17 @@ export default function Onboarding() {
                       value={university}
                       onChange={(e) => setUniversity(e.target.value)}
                       placeholder="e.g., University of Michigan"
-                      className="w-full px-4 py-3 rounded-xl border border-sand bg-cream/30 focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40 transition-all"
+                      className="w-full px-3 py-2.5 rounded-xl border border-sand bg-cream/30 text-xs focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-charcoal mb-1.5">
+                    <label className="block text-[11px] font-medium text-charcoal mb-1">
                       Home State
                     </label>
                     <select
                       value={homeState}
                       onChange={(e) => setHomeState(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl border border-sand bg-cream/30 focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40 transition-all appearance-none"
+                      className="w-full px-3 py-2.5 rounded-xl border border-sand bg-cream/30 text-xs focus:outline-none focus:ring-2 focus:ring-red/20 focus:border-red/40 appearance-none"
                     >
                       <option value="">Select your home state</option>
                       {usStates.map((s) => (
@@ -189,25 +173,23 @@ export default function Onboarding() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.25 }}
               >
-                <h2 className="font-heading text-xl font-semibold mb-1">
+                <h2 className="font-heading text-lg font-semibold mb-0.5">
                   What are you into?
                 </h2>
-                <p className="text-warmgray text-sm mb-6">
-                  Select all that apply
-                </p>
-                <div className="flex flex-wrap gap-2">
+                <p className="text-warmgray text-xs mb-5">Select all that apply</p>
+                <div className="flex flex-wrap gap-1.5">
                   {interestOptions.map((interest) => {
                     const selected = interests.includes(interest.toLowerCase());
                     return (
                       <button
                         key={interest}
                         onClick={() => toggleInterest(interest.toLowerCase())}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                        className={`px-3 py-1.5 rounded-full text-[11px] font-medium transition-all ${
                           selected
-                            ? "bg-red text-white shadow-sm"
-                            : "bg-cream border border-sand text-warmgray hover:border-red/30 hover:text-red"
+                            ? "bg-red text-white"
+                            : "bg-cream border border-sand text-warmgray hover:border-red/30"
                         }`}
                       >
                         {interest}
@@ -225,41 +207,35 @@ export default function Onboarding() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.25 }}
               >
-                <h2 className="font-heading text-xl font-semibold mb-1">
+                <h2 className="font-heading text-lg font-semibold mb-0.5">
                   What are you looking for?
                 </h2>
-                <p className="text-warmgray text-sm mb-6">
-                  We'll tailor your experience
-                </p>
-                <div className="space-y-3">
+                <p className="text-warmgray text-xs mb-5">We'll tailor your experience</p>
+                <div className="space-y-2">
                   {lookingForOptions.map((option) => {
                     const selected = lookingFor.includes(option.id);
                     return (
                       <button
                         key={option.id}
                         onClick={() => toggleLookingFor(option.id)}
-                        className={`w-full flex items-center gap-3 p-4 rounded-xl border text-left transition-all ${
+                        className={`w-full flex items-center gap-2.5 p-3 rounded-xl border text-left transition-all ${
                           selected
                             ? "border-red bg-red/5"
                             : "border-sand bg-cream/30 hover:border-red/30"
                         }`}
                       >
                         <div
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+                          className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
                             selected ? "border-red bg-red" : "border-sand"
                           }`}
                         >
-                          {selected && <Check className="w-3 h-3 text-white" />}
+                          {selected && <Check className="w-2.5 h-2.5 text-white" />}
                         </div>
                         <div>
-                          <div className="font-medium text-charcoal text-sm">
-                            {option.label}
-                          </div>
-                          <div className="text-warmgray text-xs">
-                            {option.desc}
-                          </div>
+                          <p className="font-medium text-xs text-charcoal">{option.label}</p>
+                          <p className="text-[10px] text-warmgray">{option.desc}</p>
                         </div>
                       </button>
                     );
@@ -275,29 +251,25 @@ export default function Onboarding() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.25 }}
               >
-                <h2 className="font-heading text-xl font-semibold mb-1">
-                  Add a profile photo
+                <h2 className="font-heading text-lg font-semibold mb-0.5">
+                  Profile photo
                 </h2>
-                <p className="text-warmgray text-sm mb-6">
-                  Help others recognize you (optional)
-                </p>
+                <p className="text-warmgray text-xs mb-5">Optional</p>
                 <div className="flex flex-col items-center">
-                  <div className="w-28 h-28 bg-cream border-2 border-dashed border-sand rounded-full flex flex-col items-center justify-center mb-4 hover:border-red/40 transition-colors cursor-pointer">
-                    <Camera className="w-7 h-7 text-warmgray mb-1" />
-                    <span className="text-[10px] text-warmgray">Upload</span>
+                  <div className="w-24 h-24 bg-cream border-2 border-dashed border-sand rounded-full flex flex-col items-center justify-center mb-3 hover:border-red/40 transition-colors cursor-pointer">
+                    <Camera className="w-6 h-6 text-warmgray mb-0.5" />
+                    <span className="text-[9px] text-warmgray">Upload</span>
                   </div>
                 </div>
 
-                <div className="mt-6 p-4 bg-red/5 rounded-xl border border-red/10">
-                  <div className="flex items-center gap-2 mb-1.5">
-                    <Sparkles className="w-4 h-4 text-red" />
-                    <span className="font-medium text-sm text-red">
-                      You're all set!
-                    </span>
+                <div className="mt-5 p-3 bg-red/5 rounded-xl border border-red/10">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <Sparkles className="w-3.5 h-3.5 text-red" />
+                    <span className="font-medium text-xs text-red">You're all set!</span>
                   </div>
-                  <p className="text-sm text-warmgray">
+                  <p className="text-[11px] text-warmgray">
                     Welcome, <strong>{name}</strong>! We found{" "}
                     <strong>5 students</strong> from {homeState} and{" "}
                     <strong>3 events</strong> this week.
@@ -307,13 +279,13 @@ export default function Onboarding() {
             )}
           </AnimatePresence>
 
-          <div className="flex items-center justify-between mt-8">
+          <div className="flex items-center justify-between mt-6">
             {step > 1 ? (
               <button
                 onClick={() => setStep((s) => s - 1)}
-                className="flex items-center gap-1 text-sm text-warmgray hover:text-charcoal transition-colors"
+                className="flex items-center gap-0.5 text-xs text-warmgray hover:text-charcoal"
               >
-                <ArrowLeft className="w-4 h-4" /> Back
+                <ArrowLeft className="w-3.5 h-3.5" /> Back
               </button>
             ) : (
               <div />
@@ -321,10 +293,10 @@ export default function Onboarding() {
             <button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="flex items-center gap-2 px-6 py-2.5 bg-red text-white rounded-full font-medium text-sm hover:bg-red-dark transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center gap-1.5 px-5 py-2 bg-red text-white rounded-full text-xs font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
             >
               {step === 4 ? "Get Started" : "Continue"}
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

@@ -10,7 +10,6 @@ import {
   Menu,
   X,
   Gift,
-  User,
 } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,19 +30,18 @@ export function Navbar() {
 
   return (
     <nav className="sticky top-0 z-40 bg-white border-b border-sand/60">
-      <div className="max-w-5xl mx-auto px-5">
-        <div className="flex items-center justify-between h-14">
-          {/* Logo */}
-          <Link to="/dashboard" className="flex items-center gap-2">
-            <div className="w-7 h-7 bg-red rounded-lg flex items-center justify-center">
-              <Home className="w-3.5 h-3.5 text-white" />
+      <div className="max-w-[430px] mx-auto px-4">
+        <div className="flex items-center justify-between h-12">
+          <Link to="/dashboard" className="flex items-center gap-1.5">
+            <div className="w-6 h-6 bg-red rounded-md flex items-center justify-center">
+              <Home className="w-3 h-3 text-white" />
             </div>
-            <span className="font-heading text-lg font-bold text-charcoal tracking-tight">
+            <span className="font-heading text-[15px] font-bold text-charcoal tracking-tight">
               HomeBase
             </span>
           </Link>
 
-          {/* Desktop nav */}
+          {/* Desktop nav — hidden on small, shown on md+ */}
           <div className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.to;
@@ -51,27 +49,26 @@ export function Navbar() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] font-medium transition-all ${
+                  className={`flex items-center gap-1 px-2 py-1 rounded-full text-[11px] font-medium transition-all ${
                     isActive
                       ? "bg-red text-white"
-                      : "text-warmgray hover:text-charcoal hover:bg-cream"
+                      : "text-warmgray hover:text-charcoal"
                   }`}
                 >
-                  <link.icon className="w-3.5 h-3.5" />
+                  <link.icon className="w-3 h-3" />
                   {link.label}
                 </Link>
               );
             })}
           </div>
 
-          {/* Right side */}
-          <div className="flex items-center gap-2">
-            <button className="relative p-2 text-warmgray hover:text-charcoal transition-colors">
-              <Bell className="w-[18px] h-[18px]" />
-              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red rounded-full" />
+          <div className="flex items-center gap-1.5">
+            <button className="relative p-1.5 text-warmgray hover:text-charcoal">
+              <Bell className="w-4 h-4" />
+              <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red rounded-full" />
             </button>
             <Link to="/profile">
-              <div className="w-8 h-8 bg-gradient-to-br from-red to-red-dark rounded-full flex items-center justify-center text-white text-[11px] font-bold ring-2 ring-sand/60 ring-offset-1">
+              <div className="w-7 h-7 bg-gradient-to-br from-red to-red-dark rounded-full flex items-center justify-center text-white text-[9px] font-bold ring-2 ring-sand/50 ring-offset-1">
                 {user.name
                   ? user.name
                       .split(" ")
@@ -81,20 +78,19 @@ export function Navbar() {
               </div>
             </Link>
             <button
-              className="md:hidden p-1.5 text-warmgray"
+              className="md:hidden p-1 text-warmgray"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               {mobileOpen ? (
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               ) : (
-                <Menu className="w-5 h-5" />
+                <Menu className="w-4 h-4" />
               )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile nav */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -103,7 +99,7 @@ export function Navbar() {
             exit={{ height: 0, opacity: 0 }}
             className="md:hidden overflow-hidden bg-white border-t border-sand/40"
           >
-            <div className="px-4 py-2 space-y-0.5">
+            <div className="max-w-[430px] mx-auto px-4 py-1.5 space-y-0.5">
               {navLinks.map((link) => {
                 const isActive = location.pathname === link.to;
                 return (
@@ -111,7 +107,7 @@ export function Navbar() {
                     key={link.to}
                     to={link.to}
                     onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium ${
+                    className={`flex items-center gap-2 px-3 py-2 rounded-xl text-[13px] font-medium ${
                       isActive
                         ? "bg-red/10 text-red"
                         : "text-warmgray hover:bg-cream"

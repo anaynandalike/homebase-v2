@@ -21,8 +21,6 @@ import {
   ChevronUp,
   PenLine,
   Flame,
-  Sun,
-  Sparkles,
 } from "lucide-react";
 
 const moodEmojis = [
@@ -35,7 +33,7 @@ const moodEmojis = [
 
 const moodLabels: Record<number, { label: string; desc: string }> = {
   1: { label: "Stormy", desc: "It's okay to not be okay" },
-  2: { label: "Overcast", desc: "Hang in there, brighter days ahead" },
+  2: { label: "Overcast", desc: "Hang in there" },
   3: { label: "Mild & Steady", desc: "Keeping it together" },
   4: { label: "Radiant & Warm", desc: "You're doing great" },
   5: { label: "Golden", desc: "On top of the world" },
@@ -79,7 +77,7 @@ export default function Tracker() {
   const saveMood = () => {
     if (selectedMood) {
       setTodayMood(selectedMood, moodNote || undefined);
-      addToast("Mood saved! Keep taking care of yourself.");
+      addToast("Mood saved!");
       setMoodNote("");
     }
   };
@@ -102,47 +100,47 @@ export default function Tracker() {
 
   return (
     <PageTransition>
-      <div className="max-w-2xl mx-auto px-5 py-6">
-        {/* Mood Display Card */}
+      <div className="max-w-[430px] mx-auto px-4 py-5">
+        {/* Mood Display */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-6"
+          className="mb-4"
         >
-          <div className="bg-gradient-to-br from-red to-red-dark rounded-3xl p-6 text-white text-center relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/10 to-transparent" />
+          <div className="bg-gradient-to-br from-red to-red-dark rounded-2xl p-5 text-white text-center relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
             <div className="relative">
-              <p className="text-white/60 text-xs font-medium uppercase tracking-widest mb-2">
+              <p className="text-white/50 text-[9px] font-semibold uppercase tracking-widest mb-1">
                 Current Mood
               </p>
-              <h2 className="font-heading text-3xl font-bold mb-1">
+              <h2 className="font-heading text-2xl font-bold mb-0.5">
                 {currentMoodData.label}
               </h2>
-              <p className="text-white/70 text-sm">{currentMoodData.desc}</p>
+              <p className="text-white/60 text-xs">{currentMoodData.desc}</p>
             </div>
           </div>
         </motion.div>
 
         {/* Mood Selector */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.05 }}
-          className="bg-white rounded-2xl p-5 border border-sand/60 mb-5"
+          transition={{ delay: 0.04 }}
+          className="bg-white rounded-2xl p-4 border border-sand/60 mb-4"
         >
-          <div className="flex justify-between mb-4">
+          <div className="flex justify-between mb-3">
             {moodEmojis.map((m) => (
               <button
                 key={m.value}
                 onClick={() => setSelectedMood(m.value)}
-                className={`flex flex-col items-center gap-1 p-2.5 rounded-xl transition-all ${
+                className={`flex flex-col items-center gap-0.5 p-2 rounded-xl transition-all ${
                   selectedMood === m.value
                     ? "bg-red/10 scale-110"
                     : "hover:bg-cream"
                 }`}
               >
-                <span className="text-2xl">{m.emoji}</span>
-                <span className="text-[10px] text-warmgray">{m.label}</span>
+                <span className="text-xl">{m.emoji}</span>
+                <span className="text-[9px] text-warmgray">{m.label}</span>
               </button>
             ))}
           </div>
@@ -152,34 +150,34 @@ export default function Tracker() {
             value={moodNote}
             onChange={(e) => setMoodNote(e.target.value)}
             placeholder="Add a note (optional)..."
-            className="w-full px-4 py-2.5 rounded-xl border border-sand bg-cream/30 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-red/20"
+            className="w-full px-3 py-2 rounded-xl border border-sand bg-cream/30 text-xs mb-2.5 focus:outline-none focus:ring-2 focus:ring-red/20"
           />
 
           <button
             onClick={saveMood}
             disabled={!selectedMood}
-            className="w-full py-2.5 bg-red text-white rounded-xl text-sm font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
+            className="w-full py-2 bg-red text-white rounded-xl text-xs font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
           >
             Save Check-in
           </button>
         </motion.div>
 
-        {/* Today's Reflect (Journal) */}
+        {/* Today's Reflect */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-2xl p-5 border border-sand/60 mb-5"
+          transition={{ delay: 0.08 }}
+          className="bg-white rounded-2xl p-4 border border-sand/60 mb-4"
         >
-          <div className="flex items-center gap-2 mb-3">
-            <PenLine className="w-4 h-4 text-red" />
-            <h3 className="font-heading text-base font-semibold text-charcoal">
+          <div className="flex items-center gap-1.5 mb-2.5">
+            <PenLine className="w-3.5 h-3.5 text-red" />
+            <h3 className="font-heading text-sm font-semibold text-charcoal">
               Today's Reflect
             </h3>
           </div>
 
-          <div className="bg-cream/60 rounded-xl p-3 mb-3">
-            <p className="text-sm text-warmgray italic">"{journalPrompt}"</p>
+          <div className="bg-cream/60 rounded-xl p-2.5 mb-2.5">
+            <p className="text-[11px] text-warmgray italic">"{journalPrompt}"</p>
           </div>
 
           <textarea
@@ -187,45 +185,44 @@ export default function Tracker() {
             onChange={(e) => setJournalText(e.target.value)}
             placeholder="Write your thoughts..."
             rows={3}
-            className="w-full px-4 py-3 rounded-xl border border-sand bg-cream/20 text-sm resize-none mb-3 focus:outline-none focus:ring-2 focus:ring-red/20"
+            className="w-full px-3 py-2.5 rounded-xl border border-sand bg-cream/20 text-xs resize-none mb-2.5 focus:outline-none focus:ring-2 focus:ring-red/20"
           />
 
           <button
             onClick={saveJournal}
             disabled={!journalText.trim()}
-            className="px-5 py-2 bg-red text-white rounded-xl text-sm font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
+            className="px-4 py-1.5 bg-red text-white rounded-full text-[11px] font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
           >
             Save Entry
           </button>
 
-          {/* Past Entries */}
           {journalEntries.length > 0 && (
-            <div className="mt-5 pt-4 border-t border-sand/40 space-y-2">
-              {journalEntries.slice(0, 5).map((entry) => (
-                <div key={entry.id} className="rounded-xl border border-sand/40">
+            <div className="mt-4 pt-3 border-t border-sand/30 space-y-1.5">
+              {journalEntries.slice(0, 4).map((entry) => (
+                <div key={entry.id} className="rounded-lg border border-sand/30">
                   <button
                     onClick={() =>
                       setExpandedEntry(
                         expandedEntry === entry.id ? null : entry.id
                       )
                     }
-                    className="w-full flex items-center justify-between p-3 text-left"
+                    className="w-full flex items-center justify-between p-2.5 text-left"
                   >
                     <div className="flex-1 min-w-0">
-                      <span className="text-[10px] text-warmgray-light">
+                      <span className="text-[9px] text-warmgray-light">
                         {new Date(entry.date).toLocaleDateString("en-US", {
                           month: "short",
                           day: "numeric",
                         })}
                       </span>
-                      <p className="text-sm text-charcoal truncate">
+                      <p className="text-[11px] text-charcoal truncate">
                         {entry.text}
                       </p>
                     </div>
                     {expandedEntry === entry.id ? (
-                      <ChevronUp className="w-3.5 h-3.5 text-warmgray shrink-0" />
+                      <ChevronUp className="w-3 h-3 text-warmgray shrink-0" />
                     ) : (
-                      <ChevronDown className="w-3.5 h-3.5 text-warmgray shrink-0" />
+                      <ChevronDown className="w-3 h-3 text-warmgray shrink-0" />
                     )}
                   </button>
                   <AnimatePresence>
@@ -236,11 +233,11 @@ export default function Tracker() {
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                       >
-                        <div className="px-3 pb-3">
-                          <p className="text-[10px] text-warmgray italic mb-1">
+                        <div className="px-2.5 pb-2.5">
+                          <p className="text-[9px] text-warmgray italic mb-0.5">
                             "{entry.prompt}"
                           </p>
-                          <p className="text-sm text-charcoal">{entry.text}</p>
+                          <p className="text-[11px] text-charcoal">{entry.text}</p>
                         </div>
                       </motion.div>
                     )}
@@ -254,87 +251,84 @@ export default function Tracker() {
         {/* Smart Nudge */}
         {isDowntrend && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-cream rounded-2xl p-4 border border-sand/60 mb-5"
+            className="bg-cream rounded-2xl p-3.5 border border-sand/60 mb-4"
           >
-            <div className="flex items-start gap-3">
-              <TrendingDown className="w-5 h-5 text-red shrink-0 mt-0.5" />
+            <div className="flex items-start gap-2.5">
+              <TrendingDown className="w-4 h-4 text-red shrink-0 mt-0.5" />
               <div>
-                <p className="font-medium text-sm text-charcoal mb-1">
-                  We noticed things have been tough
+                <p className="font-medium text-xs text-charcoal mb-0.5">
+                  Things have been tough
                 </p>
-                <p className="text-xs text-warmgray mb-2">
-                  A social activity might help lift your spirits:
+                <p className="text-[10px] text-warmgray mb-1.5">
+                  A social activity might help:
                 </p>
-                <div className="bg-white rounded-lg px-3 py-2 border border-sand/40 text-xs text-charcoal flex items-center gap-1.5">
-                  <Users className="w-3.5 h-3.5 text-red" />
-                  Game Night at the Union — Friday 8 PM
+                <div className="bg-white rounded-lg px-2.5 py-1.5 border border-sand/40 text-[10px] text-charcoal flex items-center gap-1">
+                  <Users className="w-3 h-3 text-red" />
+                  Game Night — Friday 8 PM
                 </div>
               </div>
             </div>
           </motion.div>
         )}
 
-        {/* Quote / Memory Card */}
+        {/* Quote Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="bg-charcoal rounded-2xl p-5 mb-5 relative overflow-hidden"
+          transition={{ delay: 0.12 }}
+          className="bg-charcoal rounded-2xl p-4 mb-4 relative overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/80 to-charcoal/60" />
-          <div className="relative">
-            <blockquote className="font-heading text-xl text-white/90 leading-snug mb-3 italic">
-              "The day I finally moved in."
-            </blockquote>
-            <p className="text-white/40 text-xs">A HomeBase Memory</p>
-          </div>
+          <blockquote className="font-heading text-lg text-white/90 leading-snug mb-2 italic">
+            "The day I finally moved in."
+          </blockquote>
+          <p className="text-white/30 text-[10px]">A HomeBase Memory</p>
         </motion.div>
 
         {/* Mood Graph */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl p-5 border border-sand/60 mb-5"
+          transition={{ delay: 0.16 }}
+          className="bg-white rounded-2xl p-4 border border-sand/60 mb-4"
         >
-          <h3 className="font-heading text-base font-semibold text-charcoal mb-4">
-            Mood Over 30 Days
+          <h3 className="font-heading text-sm font-semibold text-charcoal mb-3">
+            Mood · 30 Days
           </h3>
-          <div className="h-48">
+          <div className="h-36">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>
                 <XAxis
                   dataKey="date"
-                  tick={{ fontSize: 10, fill: "#B5B0AB" }}
-                  interval={5}
+                  tick={{ fontSize: 8, fill: "#B5B0AB" }}
+                  interval={6}
                   axisLine={false}
                   tickLine={false}
                 />
                 <YAxis
                   domain={[1, 5]}
                   ticks={[1, 2, 3, 4, 5]}
-                  tick={{ fontSize: 10, fill: "#B5B0AB" }}
+                  tick={{ fontSize: 8, fill: "#B5B0AB" }}
                   axisLine={false}
                   tickLine={false}
-                  width={24}
+                  width={18}
                 />
                 <Tooltip
                   contentStyle={{
-                    borderRadius: 12,
+                    borderRadius: 10,
                     border: "1px solid #E8E2DB",
-                    fontSize: 12,
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                    fontSize: 10,
+                    padding: "4px 8px",
                   }}
                 />
                 <Line
                   type="monotone"
                   dataKey="mood"
                   stroke="#C4404E"
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                   dot={false}
-                  activeDot={{ r: 5, fill: "#C4404E" }}
+                  activeDot={{ r: 4, fill: "#C4404E" }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -343,25 +337,25 @@ export default function Tracker() {
 
         {/* Streak Banner */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-          className="bg-red rounded-2xl px-5 py-4 flex items-center justify-between mb-5"
+          transition={{ delay: 0.2 }}
+          className="bg-red rounded-2xl px-4 py-3 flex items-center justify-between mb-4"
         >
-          <div className="flex items-center gap-3">
-            <Flame className="w-6 h-6 text-white" />
+          <div className="flex items-center gap-2.5">
+            <Flame className="w-5 h-5 text-white" />
             <div>
-              <p className="text-white font-heading text-lg font-bold">
+              <p className="text-white font-heading text-base font-bold leading-tight">
                 Streak: {streakDays} Days
               </p>
-              <p className="text-white/60 text-xs">Keep the fire going!</p>
+              <p className="text-white/50 text-[9px]">Keep the fire going!</p>
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-0.5">
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}
-                className={`w-2 h-2 rounded-full ${
+                className={`w-1.5 h-1.5 rounded-full ${
                   i < 4 ? "bg-white" : "bg-white/30"
                 }`}
               />
@@ -371,30 +365,30 @@ export default function Tracker() {
 
         {/* Crisis Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-red-bg rounded-2xl p-4 border border-red/10"
+          transition={{ delay: 0.24 }}
+          className="bg-red-bg rounded-2xl p-3.5 border border-red/10"
         >
-          <div className="flex items-start gap-3">
-            <Phone className="w-5 h-5 text-red shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2.5">
+            <Phone className="w-4 h-4 text-red shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-sm text-charcoal mb-1">
+              <p className="font-semibold text-xs text-charcoal mb-0.5">
                 Feeling overwhelmed?
               </p>
-              <p className="text-xs text-warmgray mb-2">
-                You're not alone. Reach out anytime.
+              <p className="text-[10px] text-warmgray mb-2">
+                You're not alone.
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex gap-1.5">
                 <a
                   href="tel:988"
-                  className="px-3 py-1.5 bg-red text-white text-xs font-medium rounded-full hover:bg-red-dark transition-colors"
+                  className="px-2.5 py-1 bg-red text-white text-[10px] font-medium rounded-full"
                 >
-                  988 Crisis Lifeline
+                  988 Crisis Line
                 </a>
                 <a
                   href="#"
-                  className="px-3 py-1.5 bg-white text-red text-xs font-medium rounded-full border border-red/20 hover:bg-red/5 transition-colors"
+                  className="px-2.5 py-1 bg-white text-red text-[10px] font-medium rounded-full border border-red/20"
                 >
                   Campus CAPS
                 </a>
