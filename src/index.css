@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #FAF7F4;
+  --color-cream-dark: #F0EBE5;
+  --color-warm-white: #FFFFFF;
+  --color-red: #C4404E;
+  --color-red-light: #D4606C;
+  --color-red-dark: #A83040;
+  --color-red-bg: #FDF0F0;
+  --color-charcoal: #2A2A2A;
+  --color-warmgray: #8A8380;
+  --color-warmgray-light: #B5B0AB;
+  --color-sand: #E8E2DB;
+  --color-sand-light: #F2EEEA;
+  --color-forest: #2D5A3D;
+  --color-sage: #8BAF7E;
+
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-charcoal);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sand);
+  border-radius: 3px;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
