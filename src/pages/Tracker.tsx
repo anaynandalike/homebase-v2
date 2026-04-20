@@ -33,7 +33,7 @@ const moodEmojis = [
 
 const moodLabels: Record<number, { label: string; desc: string }> = {
   1: { label: "Stormy", desc: "It's okay to not be okay" },
-  2: { label: "Overcast", desc: "Hang in there" },
+  2: { label: "Overcast", desc: "Hang in there, brighter days ahead" },
   3: { label: "Mild & Steady", desc: "Keeping it together" },
   4: { label: "Radiant & Warm", desc: "You're doing great" },
   5: { label: "Golden", desc: "On top of the world" },
@@ -100,302 +100,312 @@ export default function Tracker() {
 
   return (
     <PageTransition>
-      <div className="max-w-[430px] mx-auto px-4 py-5">
-        {/* Mood Display */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-4"
-        >
-          <div className="bg-gradient-to-br from-red to-red-dark rounded-2xl p-5 text-white text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-            <div className="relative">
-              <p className="text-white/50 text-[9px] font-semibold uppercase tracking-widest mb-1">
-                Current Mood
-              </p>
-              <h2 className="font-heading text-2xl font-bold mb-0.5">
-                {currentMoodData.label}
-              </h2>
-              <p className="text-white/60 text-xs">{currentMoodData.desc}</p>
-            </div>
-          </div>
-        </motion.div>
+      <div className="max-w-7xl mx-auto px-8 py-10">
+        <div className="mb-8">
+          <h1 className="font-heading text-3xl font-bold text-charcoal">
+            Resilience Tracker
+          </h1>
+          <p className="text-warmgray text-base mt-1">
+            Check in with yourself and track your well-being
+          </p>
+        </div>
 
-        {/* Mood Selector */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.04 }}
-          className="bg-white rounded-2xl p-4 border border-sand/60 mb-4"
-        >
-          <div className="flex justify-between mb-3">
-            {moodEmojis.map((m) => (
-              <button
-                key={m.value}
-                onClick={() => setSelectedMood(m.value)}
-                className={`flex flex-col items-center gap-0.5 p-2 rounded-xl transition-all ${
-                  selectedMood === m.value
-                    ? "bg-red/10 scale-110"
-                    : "hover:bg-cream"
-                }`}
-              >
-                <span className="text-xl">{m.emoji}</span>
-                <span className="text-[9px] text-warmgray">{m.label}</span>
-              </button>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Column */}
+          <div className="space-y-6">
+            {/* Mood Display */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="bg-gradient-to-br from-red to-red-dark rounded-3xl p-10 text-white text-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                <div className="relative">
+                  <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-2">
+                    Current Mood
+                  </p>
+                  <h2 className="font-heading text-4xl font-bold mb-1">
+                    {currentMoodData.label}
+                  </h2>
+                  <p className="text-white/60 text-base">{currentMoodData.desc}</p>
+                </div>
+              </div>
+            </motion.div>
 
-          <input
-            type="text"
-            value={moodNote}
-            onChange={(e) => setMoodNote(e.target.value)}
-            placeholder="Add a note (optional)..."
-            className="w-full px-3 py-2 rounded-xl border border-sand bg-cream/30 text-xs mb-2.5 focus:outline-none focus:ring-2 focus:ring-red/20"
-          />
-
-          <button
-            onClick={saveMood}
-            disabled={!selectedMood}
-            className="w-full py-2 bg-red text-white rounded-xl text-xs font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
-          >
-            Save Check-in
-          </button>
-        </motion.div>
-
-        {/* Today's Reflect */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.08 }}
-          className="bg-white rounded-2xl p-4 border border-sand/60 mb-4"
-        >
-          <div className="flex items-center gap-1.5 mb-2.5">
-            <PenLine className="w-3.5 h-3.5 text-red" />
-            <h3 className="font-heading text-sm font-semibold text-charcoal">
-              Today's Reflect
-            </h3>
-          </div>
-
-          <div className="bg-cream/60 rounded-xl p-2.5 mb-2.5">
-            <p className="text-[11px] text-warmgray italic">"{journalPrompt}"</p>
-          </div>
-
-          <textarea
-            value={journalText}
-            onChange={(e) => setJournalText(e.target.value)}
-            placeholder="Write your thoughts..."
-            rows={3}
-            className="w-full px-3 py-2.5 rounded-xl border border-sand bg-cream/20 text-xs resize-none mb-2.5 focus:outline-none focus:ring-2 focus:ring-red/20"
-          />
-
-          <button
-            onClick={saveJournal}
-            disabled={!journalText.trim()}
-            className="px-4 py-1.5 bg-red text-white rounded-full text-[11px] font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
-          >
-            Save Entry
-          </button>
-
-          {journalEntries.length > 0 && (
-            <div className="mt-4 pt-3 border-t border-sand/30 space-y-1.5">
-              {journalEntries.slice(0, 4).map((entry) => (
-                <div key={entry.id} className="rounded-lg border border-sand/30">
+            {/* Mood Selector */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              className="bg-white rounded-2xl p-6 border border-sand/60"
+            >
+              <div className="flex justify-between mb-5">
+                {moodEmojis.map((m) => (
                   <button
-                    onClick={() =>
-                      setExpandedEntry(
-                        expandedEntry === entry.id ? null : entry.id
-                      )
-                    }
-                    className="w-full flex items-center justify-between p-2.5 text-left"
+                    key={m.value}
+                    onClick={() => setSelectedMood(m.value)}
+                    className={`flex flex-col items-center gap-1.5 p-3 rounded-xl transition-all ${
+                      selectedMood === m.value
+                        ? "bg-red/10 scale-110"
+                        : "hover:bg-cream"
+                    }`}
                   >
-                    <div className="flex-1 min-w-0">
-                      <span className="text-[9px] text-warmgray-light">
-                        {new Date(entry.date).toLocaleDateString("en-US", {
-                          month: "short",
-                          day: "numeric",
-                        })}
-                      </span>
-                      <p className="text-[11px] text-charcoal truncate">
-                        {entry.text}
-                      </p>
-                    </div>
-                    {expandedEntry === entry.id ? (
-                      <ChevronUp className="w-3 h-3 text-warmgray shrink-0" />
-                    ) : (
-                      <ChevronDown className="w-3 h-3 text-warmgray shrink-0" />
-                    )}
+                    <span className="text-3xl">{m.emoji}</span>
+                    <span className="text-xs text-warmgray">{m.label}</span>
                   </button>
-                  <AnimatePresence>
-                    {expandedEntry === entry.id && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-2.5 pb-2.5">
-                          <p className="text-[9px] text-warmgray italic mb-0.5">
-                            "{entry.prompt}"
-                          </p>
-                          <p className="text-[11px] text-charcoal">{entry.text}</p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
-            </div>
-          )}
-        </motion.div>
-
-        {/* Smart Nudge */}
-        {isDowntrend && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-cream rounded-2xl p-3.5 border border-sand/60 mb-4"
-          >
-            <div className="flex items-start gap-2.5">
-              <TrendingDown className="w-4 h-4 text-red shrink-0 mt-0.5" />
-              <div>
-                <p className="font-medium text-xs text-charcoal mb-0.5">
-                  Things have been tough
-                </p>
-                <p className="text-[10px] text-warmgray mb-1.5">
-                  A social activity might help:
-                </p>
-                <div className="bg-white rounded-lg px-2.5 py-1.5 border border-sand/40 text-[10px] text-charcoal flex items-center gap-1">
-                  <Users className="w-3 h-3 text-red" />
-                  Game Night — Friday 8 PM
-                </div>
+                ))}
               </div>
-            </div>
-          </motion.div>
-        )}
 
-        {/* Quote Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.12 }}
-          className="bg-charcoal rounded-2xl p-4 mb-4 relative overflow-hidden"
-        >
-          <blockquote className="font-heading text-lg text-white/90 leading-snug mb-2 italic">
-            "The day I finally moved in."
-          </blockquote>
-          <p className="text-white/30 text-[10px]">A HomeBase Memory</p>
-        </motion.div>
-
-        {/* Mood Graph */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.16 }}
-          className="bg-white rounded-2xl p-4 border border-sand/60 mb-4"
-        >
-          <h3 className="font-heading text-sm font-semibold text-charcoal mb-3">
-            Mood · 30 Days
-          </h3>
-          <div className="h-36">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData}>
-                <XAxis
-                  dataKey="date"
-                  tick={{ fontSize: 8, fill: "#B5B0AB" }}
-                  interval={6}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis
-                  domain={[1, 5]}
-                  ticks={[1, 2, 3, 4, 5]}
-                  tick={{ fontSize: 8, fill: "#B5B0AB" }}
-                  axisLine={false}
-                  tickLine={false}
-                  width={18}
-                />
-                <Tooltip
-                  contentStyle={{
-                    borderRadius: 10,
-                    border: "1px solid #E8E2DB",
-                    fontSize: 10,
-                    padding: "4px 8px",
-                  }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="mood"
-                  stroke="#C4404E"
-                  strokeWidth={1.5}
-                  dot={false}
-                  activeDot={{ r: 4, fill: "#C4404E" }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </motion.div>
-
-        {/* Streak Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-red rounded-2xl px-4 py-3 flex items-center justify-between mb-4"
-        >
-          <div className="flex items-center gap-2.5">
-            <Flame className="w-5 h-5 text-white" />
-            <div>
-              <p className="text-white font-heading text-base font-bold leading-tight">
-                Streak: {streakDays} Days
-              </p>
-              <p className="text-white/50 text-[9px]">Keep the fire going!</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                className={`w-1.5 h-1.5 rounded-full ${
-                  i < 4 ? "bg-white" : "bg-white/30"
-                }`}
+              <input
+                type="text"
+                value={moodNote}
+                onChange={(e) => setMoodNote(e.target.value)}
+                placeholder="Add a note (optional)..."
+                className="w-full px-4 py-3 rounded-xl border border-sand bg-cream/30 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-red/20"
               />
-            ))}
-          </div>
-        </motion.div>
 
-        {/* Crisis Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.24 }}
-          className="bg-red-bg rounded-2xl p-3.5 border border-red/10"
-        >
-          <div className="flex items-start gap-2.5">
-            <Phone className="w-4 h-4 text-red shrink-0 mt-0.5" />
-            <div>
-              <p className="font-semibold text-xs text-charcoal mb-0.5">
-                Feeling overwhelmed?
-              </p>
-              <p className="text-[10px] text-warmgray mb-2">
-                You're not alone.
-              </p>
-              <div className="flex gap-1.5">
-                <a
-                  href="tel:988"
-                  className="px-2.5 py-1 bg-red text-white text-[10px] font-medium rounded-full"
-                >
-                  988 Crisis Line
-                </a>
-                <a
-                  href="#"
-                  className="px-2.5 py-1 bg-white text-red text-[10px] font-medium rounded-full border border-red/20"
-                >
-                  Campus CAPS
-                </a>
+              <button
+                onClick={saveMood}
+                disabled={!selectedMood}
+                className="w-full py-3 bg-red text-white rounded-xl text-sm font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
+              >
+                Save Check-in
+              </button>
+            </motion.div>
+
+            {/* Quote Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-charcoal rounded-2xl p-8 relative overflow-hidden"
+            >
+              <blockquote className="font-heading text-2xl text-white/90 leading-snug mb-3 italic">
+                "The day I finally moved in."
+              </blockquote>
+              <p className="text-white/30 text-sm">A HomeBase Memory</p>
+            </motion.div>
+
+            {/* Streak Banner */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="bg-red rounded-2xl px-6 py-5 flex items-center justify-between"
+            >
+              <div className="flex items-center gap-4">
+                <Flame className="w-7 h-7 text-white" />
+                <div>
+                  <p className="text-white font-heading text-xl font-bold">
+                    Streak: {streakDays} Days
+                  </p>
+                  <p className="text-white/50 text-sm">Keep the fire going!</p>
+                </div>
               </div>
-            </div>
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className={`w-2.5 h-2.5 rounded-full ${
+                      i < 4 ? "bg-white" : "bg-white/30"
+                    }`}
+                  />
+                ))}
+              </div>
+            </motion.div>
           </div>
-        </motion.div>
+
+          {/* Right Column */}
+          <div className="space-y-6">
+            {/* Today's Reflect */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              className="bg-white rounded-2xl p-6 border border-sand/60"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <PenLine className="w-5 h-5 text-red" />
+                <h3 className="font-heading text-lg font-semibold text-charcoal">
+                  Today's Reflect
+                </h3>
+              </div>
+
+              <div className="bg-cream/60 rounded-xl p-4 mb-4">
+                <p className="text-sm text-warmgray italic">"{journalPrompt}"</p>
+              </div>
+
+              <textarea
+                value={journalText}
+                onChange={(e) => setJournalText(e.target.value)}
+                placeholder="Write your thoughts..."
+                rows={4}
+                className="w-full px-4 py-3 rounded-xl border border-sand bg-cream/20 text-sm resize-none mb-4 focus:outline-none focus:ring-2 focus:ring-red/20"
+              />
+
+              <button
+                onClick={saveJournal}
+                disabled={!journalText.trim()}
+                className="px-6 py-2.5 bg-red text-white rounded-full text-sm font-semibold hover:bg-red-dark transition-colors disabled:opacity-40"
+              >
+                Save Entry
+              </button>
+
+              {journalEntries.length > 0 && (
+                <div className="mt-6 pt-4 border-t border-sand/30 space-y-2">
+                  <h4 className="text-sm font-medium text-charcoal mb-2">Past Entries</h4>
+                  {journalEntries.slice(0, 5).map((entry) => (
+                    <div key={entry.id} className="rounded-xl border border-sand/40">
+                      <button
+                        onClick={() =>
+                          setExpandedEntry(expandedEntry === entry.id ? null : entry.id)
+                        }
+                        className="w-full flex items-center justify-between p-3 text-left"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <span className="text-xs text-warmgray-light">
+                            {new Date(entry.date).toLocaleDateString("en-US", {
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </span>
+                          <p className="text-sm text-charcoal truncate">{entry.text}</p>
+                        </div>
+                        {expandedEntry === entry.id ? (
+                          <ChevronUp className="w-4 h-4 text-warmgray shrink-0" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4 text-warmgray shrink-0" />
+                        )}
+                      </button>
+                      <AnimatePresence>
+                        {expandedEntry === entry.id && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-3 pb-3">
+                              <p className="text-xs text-warmgray italic mb-1">"{entry.prompt}"</p>
+                              <p className="text-sm text-charcoal">{entry.text}</p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+
+            {/* Mood Graph */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-white rounded-2xl p-6 border border-sand/60"
+            >
+              <h3 className="font-heading text-lg font-semibold text-charcoal mb-5">
+                Mood Over 30 Days
+              </h3>
+              <div className="h-56">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartData}>
+                    <XAxis
+                      dataKey="date"
+                      tick={{ fontSize: 11, fill: "#B5B0AB" }}
+                      interval={4}
+                      axisLine={false}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      domain={[1, 5]}
+                      ticks={[1, 2, 3, 4, 5]}
+                      tick={{ fontSize: 11, fill: "#B5B0AB" }}
+                      axisLine={false}
+                      tickLine={false}
+                      width={24}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        borderRadius: 12,
+                        border: "1px solid #E8E2DB",
+                        fontSize: 13,
+                      }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="mood"
+                      stroke="#C4404E"
+                      strokeWidth={2.5}
+                      dot={false}
+                      activeDot={{ r: 5, fill: "#C4404E" }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            </motion.div>
+
+            {/* Smart Nudge */}
+            {isDowntrend && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-cream rounded-2xl p-5 border border-sand/60"
+              >
+                <div className="flex items-start gap-3">
+                  <TrendingDown className="w-5 h-5 text-red shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-medium text-sm text-charcoal mb-1">
+                      We noticed things have been tough
+                    </p>
+                    <p className="text-sm text-warmgray mb-2">
+                      A social activity might help:
+                    </p>
+                    <div className="bg-white rounded-lg px-3 py-2 border border-sand/40 text-sm text-charcoal flex items-center gap-2">
+                      <Users className="w-4 h-4 text-red" />
+                      Game Night at the Union — Friday 8 PM
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Crisis Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-red-bg rounded-2xl p-5 border border-red/10"
+            >
+              <div className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-red shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold text-sm text-charcoal mb-1">
+                    Feeling overwhelmed?
+                  </p>
+                  <p className="text-sm text-warmgray mb-3">
+                    You're not alone. Reach out anytime.
+                  </p>
+                  <div className="flex gap-2">
+                    <a
+                      href="tel:988"
+                      className="px-4 py-2 bg-red text-white text-sm font-medium rounded-full"
+                    >
+                      988 Crisis Lifeline
+                    </a>
+                    <a
+                      href="#"
+                      className="px-4 py-2 bg-white text-red text-sm font-medium rounded-full border border-red/20"
+                    >
+                      Campus CAPS
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </PageTransition>
   );
