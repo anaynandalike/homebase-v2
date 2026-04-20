@@ -85,7 +85,7 @@ export default function Compass() {
 
   return (
     <PageTransition>
-      <div className="max-w-7xl mx-auto px-8 py-10">
+      <div className="px-8 py-10">
         <div className="mb-8">
           <h1 className="font-heading text-3xl font-bold text-charcoal">
             Campus Compass

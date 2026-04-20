@@ -25,7 +25,7 @@ export default function Dashboard() {
 
   return (
     <PageTransition>
-      <div className="max-w-7xl mx-auto px-8 py-10">
+      <div className="px-8 py-10">
         {/* Welcome */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
